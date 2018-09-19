@@ -23,11 +23,13 @@
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
     NSLog(@"continueUserActivity");
-    if (userActivity) {
-        NSLog(@"userActivity %@", [userActivity description]);
-    }
-    if (restorationHandler) {
-        NSLog(@"restorationHandler %@", [restorationHandler description]);
+    if ([userActivity.activityType isEqualToString:@"loying.LearnSiriShortcut.type"]) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"siri 呼起" message:userActivity.title preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [alertController addAction:sureAction];
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     }
     return YES;
 }
